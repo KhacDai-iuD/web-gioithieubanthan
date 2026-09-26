@@ -3,352 +3,847 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giới thiệu bản thân - Đinh Khắc Đại</title>
-    <!-- Nhúng Font Awesome cho biểu tượng -->
+    <title>Quản Lý & Tính Điểm Sinh Viên</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-image: url('background.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
             min-height: 100vh;
         }
 
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: -1;
-        }
-
-        .container {
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
-            padding: 40px;
-            width: 90%;
-            max-width: 750px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            text-align: center;
-            margin: 20px 0;
         }
 
-        h1 {
-            font-size: 2.8rem;
-            margin-bottom: 5px;
-            letter-spacing: 1px;
-            text-shadow: 2px 2px 6px rgba(0,0,0,0.6);
+        .badge-gioi {
+            background-color: #d1fae5;
+            color: #047857;
+            border: 1px solid #a7f3d0;
+        }
+        .badge-kha {
+            background-color: #dbeafe;
+            color: #1d4ed8;
+            border: 1px solid #bfdbfe;
+        }
+        .badge-tb {
+            background-color: #fef3c7;
+            color: #b45309;
+            border: 1px solid #fde68a;
+        }
+        .badge-yeu {
+            background-color: #fee2e2;
+            color: #b91c1c;
+            border: 1px solid #fca5a5;
         }
 
-        p.msv {
-            font-size: 1.2rem;
-            opacity: 0.85;
-            margin-top: 0;
-            margin-bottom: 25px;
-            font-weight: 500;
+        /* Custom scrollbar for code preview */
+        pre::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
         }
-
-        .section {
-            margin-top: 30px;
-            text-align: left;
+        pre::-webkit-scrollbar-track {
+            background: #1e293b;
         }
-
-        .section-title {
-            font-size: 1.4rem;
-            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
-            padding-bottom: 8px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .section-title i {
-            margin-right: 12px;
-            color: #f1c40f;
-        }
-
-        .list {
-            list-style: none;
-            padding: 0;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-        }
-
-        .list-item {
-            background: rgba(255, 255, 255, 0.08);
-            padding: 14px 18px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            font-size: 1.05rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .list-item:hover {
-            transform: translateY(-3px);
-            background: rgba(255, 255, 255, 0.18);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .icon {
-            margin-right: 14px;
-            font-size: 1.2rem;
-            width: 25px;
-            text-align: center;
-            color: #3498db;
-        }
-
-        .intro-text {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            opacity: 0.95;
-            margin-bottom: 20px;
-        }
-
-        .footer {
-            margin-top: 35px;
-            font-size: 0.9rem;
-            opacity: 0.75;
-        }
-
-        .footer a {
-            color: #3498db;
-            text-decoration: none;
-            margin: 0 8px;
-            font-weight: 500;
-        }
-
-        .footer a:hover {
-            text-decoration: underline;
-        }
-
-        /* --- MỤC CÓ THỂ BẤM XEM ẢNH --- */
-        .clickable-item {
-            cursor: pointer;
-            position: relative;
-        }
-        
-        .clickable-item::after {
-            content: "(Bấm xem ảnh)";
-            font-size: 0.75rem;
-            color: #f1c40f;
-            position: absolute;
-            bottom: 4px;
-            right: 12px;
-            opacity: 0.8;
-        }
-
-        /* --- CỬA SỔ POPUP (MODAL) --- */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.92);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-        }
-
-        .modal-content {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            margin: 4% auto;
-            padding: 35px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 25px;
-            width: 85%;
-            max-width: 950px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
-            position: relative;
-            text-align: center;
-        }
-
-        .close-gallery {
-            color: rgba(255,255,255,0.6);
-            float: right;
-            font-size: 35px;
-            font-weight: bold;
-            position: absolute;
-            top: 15px;
-            right: 25px;
-            transition: color 0.3s;
-            cursor: pointer;
-        }
-
-        .close-gallery:hover {
-            color: #fff;
-        }
-
-        .modal-title {
-            font-size: 2rem;
-            margin-top: 0;
-            margin-bottom: 25px;
-            color: #f1c40f;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            margin-top: 15px;
-        }
-
-        .gallery-image {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-            border-radius: 15px;
-            border: 2px solid rgba(255, 255, 255, 0.15);
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
-        }
-
-        .gallery-image:hover {
-            transform: scale(1.04);
-            border-color: #f1c40f;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+        pre::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 4px;
         }
     </style>
 </head>
-<body>
+<body class="text-slate-800 antialiased p-3 sm:p-6 md:p-8">
 
-    <div class="container">
-        <h1>ĐINH KHẮC ĐẠI</h1>
-        <p class="msv">Mã số sinh viên: 24100340</p>
-        
-        <div class="section">
-            <h2 class="section-title"><i class="fas fa-user"></i> Giới thiệu</h2>
-            <p class="intro-text">
-                Xin chào! Tôi là Đinh Khắc Đại. Đây là trang web cá nhân nhỏ do tôi tự làm. Rất vui được gặp bạn!
-            </p>
+    <div class="max-w-6xl mx-auto">
+        <header class="text-center mb-8">
+            <div class="inline-flex items-center justify-center p-3 bg-blue-600 text-white rounded-2xl shadow-lg mb-3">
+                <i class="fa-solid fa-graduation-cap text-3xl"></i>
+            </div>
+            <h1 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">Hệ Thống Tính Điểm Sinh Viên</h1>
+            <p class="text-slate-500 text-sm sm:text-base mt-1">Đánh giá kết quả học tập & Quản lý điểm số môn học</p>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <div class="flex justify-center mb-6">
+            <div class="inline-flex p-1 bg-slate-200/80 rounded-xl shadow-inner">
+                <button id="tabAppBtn" onclick="switchTab('app')" class="flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 bg-white text-blue-600 shadow-sm">
+                    <i class="fa-solid fa-calculator"></i>
+                    <span>Ứng Dụng Tính Điểm</span>
+                </button>
+                <button id="tabExportBtn" onclick="switchTab('export')" class="flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 text-slate-600 hover:text-slate-900">
+                    <i class="fa-solid fa-code"></i>
+                    <span>Xem & Xuất Mã Nguồn Nộp Bài</span>
+                </button>
+            </div>
         </div>
 
-        <div class="section">
-            <h2 class="section-title"><i class="fas fa-heart"></i> Sở thích</h2>
-            <ul class="list">
-                <li id="nuoiRanItem" class="list-item clickable-item"><i class="fas fa-staff-snake icon"></i> Nuôi rắn</li>
-                <li class="list-item"><i class="fas fa-bed icon"></i> Ngủ</li>
-                <li id="danhCauItem" class="list-item clickable-item"><i class="fas fa-table-tennis-paddle-ball icon"></i> Đánh cầu</li>
-                <li class="list-item"><i class="fas fa-microphone-alt icon"></i> Hát Karaoke</li>
-            </ul>
+        <!-- MAIN APP VIEW -->
+        <div id="appView" class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <div class="lg:col-span-5">
+                <div class="glass-card rounded-2xl shadow-xl p-6 sm:p-7 border border-slate-100">
+                    <div class="flex items-center justify-between pb-4 mb-6 border-b border-slate-100">
+                        <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-user-pen text-blue-600"></i> Nhập Thông Tin & Điểm Số
+                        </h2>
+                        <button type="button" onclick="loadSampleData()" class="text-xs text-blue-600 hover:text-blue-800 font-medium hover:underline flex items-center gap-1">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> Mẫu thử
+                        </button>
+                    </div>
+
+                    <form id="gradeForm" onsubmit="handleCalculate(event)" novalidate class="space-y-4">
+                        <!-- Student Name -->
+                        <div>
+                            <label for="studentName" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+                                Họ và Tên Sinh Viên <span class="text-rose-500">*</span>
+                            </label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+                                    <i class="fa-solid fa-user"></i>
+                                </span>
+                                <input type="text" id="studentName" placeholder="Nhập tên sinh viên..."
+                                    class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white text-sm outline-none transition-all">
+                            </div>
+                            <p id="error-studentName" class="text-rose-500 text-xs mt-1 hidden"></p>
+                        </div>
+
+                        <div class="pt-2">
+                            <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-3">
+                                Điểm 5 Môn Học (Thang điểm 0 - 10) <span class="text-rose-500">*</span>
+                            </label>
+                            
+                            <div class="space-y-3">
+                                <!-- Subject 1 -->
+                                <div>
+                                    <div class="flex justify-between items-center text-xs mb-1">
+                                        <span class="font-medium text-slate-700">1. Giải tích 1</span>
+                                    </div>
+                                    <input type="number" step="0.1" min="0" max="10" id="score0" placeholder="Nhập điểm (0.0 - 10.0)"
+                                        class="score-input w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white text-sm outline-none transition-all">
+                                    <p id="error-score0" class="text-rose-500 text-xs mt-1 hidden"></p>
+                                </div>
+
+                                <!-- Subject 2 -->
+                                <div>
+                                    <div class="flex justify-between items-center text-xs mb-1">
+                                        <span class="font-medium text-slate-700">2. Đại số tuyến tính</span>
+                                    </div>
+                                    <input type="number" step="0.1" min="0" max="10" id="score1" placeholder="Nhập điểm (0.0 - 10.0)"
+                                        class="score-input w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white text-sm outline-none transition-all">
+                                    <p id="error-score1" class="text-rose-500 text-xs mt-1 hidden"></p>
+                                </div>
+
+                                <!-- Subject 3 -->
+                                <div>
+                                    <div class="flex justify-between items-center text-xs mb-1">
+                                        <span class="font-medium text-slate-700">3. Xác suất thống kê</span>
+                                    </div>
+                                    <input type="number" step="0.1" min="0" max="10" id="score2" placeholder="Nhập điểm (0.0 - 10.0)"
+                                        class="score-input w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white text-sm outline-none transition-all">
+                                    <p id="error-score2" class="text-rose-500 text-xs mt-1 hidden"></p>
+                                </div>
+
+                                <!-- Subject 4 -->
+                                <div>
+                                    <div class="flex justify-between items-center text-xs mb-1">
+                                        <span class="font-medium text-slate-700">4. Tin học đại cương</span>
+                                    </div>
+                                    <input type="number" step="0.1" min="0" max="10" id="score3" placeholder="Nhập điểm (0.0 - 10.0)"
+                                        class="score-input w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white text-sm outline-none transition-all">
+                                    <p id="error-score3" class="text-rose-500 text-xs mt-1 hidden"></p>
+                                </div>
+
+                                <!-- Subject 5 -->
+                                <div>
+                                    <div class="flex justify-between items-center text-xs mb-1">
+                                        <span class="font-medium text-slate-700">5. Xây dựng ứng dụng Web</span>
+                                    </div>
+                                    <input type="number" step="0.1" min="0" max="10" id="score4" placeholder="Nhập điểm (0.0 - 10.0)"
+                                        class="score-input w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white text-sm outline-none transition-all">
+                                    <p id="error-score4" class="text-rose-500 text-xs mt-1 hidden"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="pt-4 flex gap-3">
+                            <button type="submit" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-xl shadow-lg shadow-blue-500/30 transition-all flex items-center justify-center gap-2 text-sm">
+                                <i class="fa-solid fa-calculator"></i> Tính Kết Quả
+                            </button>
+                            <button type="button" onclick="resetForm()" class="px-4 py-3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-semibold rounded-xl transition-all text-sm">
+                                <i class="fa-solid fa-rotate-left"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="lg:col-span-7">
+                <!-- Empty Placeholder -->
+                <div id="emptyResultState" class="glass-card rounded-2xl shadow-xl p-8 text-center h-full flex flex-col items-center justify-center border border-slate-100 min-h-[400px]">
+                    <div class="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center text-blue-500 mb-4 shadow-inner">
+                        <i class="fa-solid fa-chart-pie text-3xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-700 mb-1">Chưa có kết quả</h3>
+                    <p class="text-slate-400 text-sm max-w-sm">Vui lòng nhập đầy đủ họ tên và điểm số của 5 môn học, sau đó bấm nút "Tính Kết Quả".</p>
+                </div>
+
+                <!-- Result Card -->
+                <div id="resultCard" class="glass-card rounded-2xl shadow-xl p-6 sm:p-7 border border-slate-100 hidden">
+                    <div class="flex items-center justify-between pb-4 mb-6 border-b border-slate-100">
+                        <div>
+                            <span class="text-xs font-semibold text-blue-600 uppercase tracking-wider">Báo cáo học tập</span>
+                            <h2 id="resStudentName" class="text-xl font-bold text-slate-900 mt-0.5">---</h2>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-xs text-slate-400 block">Thời gian tính</span>
+                            <span id="resTimestamp" class="text-xs font-medium text-slate-600">---</span>
+                        </div>
+                    </div>
+
+                    <!-- Main Stats Cards -->
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div class="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl p-4 text-white shadow-md">
+                            <span class="text-xs text-blue-100 uppercase tracking-wider font-medium block mb-1">Điểm Trung Bình</span>
+                            <div class="flex items-baseline gap-1">
+                                <span id="resAverage" class="text-3xl font-extrabold tracking-tight">0.00</span>
+                                <span class="text-xs text-blue-200">/ 10.0</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 flex flex-col justify-between">
+                            <span class="text-xs text-slate-500 uppercase tracking-wider font-medium block">Xếp Loại Học Tập</span>
+                            <div class="mt-1">
+                                <span id="resClassificationBadge" class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-bold badge-tb">
+                                    ---
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Scores Table -->
+                    <div class="mb-6">
+                        <h3 class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Chi tiết bảng điểm môn học</h3>
+                        <div class="overflow-x-auto rounded-xl border border-slate-200">
+                            <table class="w-full text-left text-sm">
+                                <thead class="bg-slate-100 text-slate-600 font-semibold text-xs uppercase">
+                                    <tr>
+                                        <th class="py-3 px-4">Môn Học</th>
+                                        <th class="py-3 px-4 text-center">Thang Điểm</th>
+                                        <th class="py-3 px-4 text-right">Điểm Số</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="resTableBody" class="divide-y divide-slate-100 bg-white">
+                                    <!-- Dynamic rows -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Grading Scale Reference -->
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200/60 text-xs text-slate-600">
+                        <p class="font-semibold mb-2 text-slate-700">Quy tắc xếp loại học tập:</p>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                            <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> ≥ 8.0: <strong>Giỏi</strong></div>
+                            <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-blue-500"></span> ≥ 6.5: <strong>Khá</strong></div>
+                            <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-amber-500"></span> ≥ 5.0: <strong>Trung bình</strong></div>
+                            <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-rose-500"></span> &lt; 5.0: <strong>Yếu</strong></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="section">
-            <h2 class="section-title"><i class="fas fa-bolt"></i> Kỹ năng</h2>
-            <ul class="list">
-                <li id="nauAnItem" class="list-item clickable-item"><i class="fas fa-utensils icon"></i> Nấu ăn & Ẩm thực</li>
-                <li class="list-item"><i class="fas fa-clock icon"></i> Ngủ quá giờ trưa</li>
-            </ul>
-        </div>
+        <div id="exportView" class="hidden">
+            <div class="glass-card rounded-2xl shadow-xl p-6 border border-slate-100">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 mb-6 border-b border-slate-100">
+                    <div>
+                        <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-file-code text-blue-600"></i> Mã Nguồn Cho Bài Nộp Sinh Viên
+                        </h2>
+                        <p class="text-slate-500 text-xs mt-0.5">Sao chép nhanh mã nguồn để nộp bài theo đúng 2 cách yêu cầu</p>
+                    </div>
 
-        <div class="footer">
-            <p>© 2026 Đinh Khắc Đại - 24100340 | Kết nối: <a href="https://github.com" target="_blank">GitHub</a></p>
-        </div>
-    </div>
+                    <!-- Mode toggle -->
+                    <div class="inline-flex p-1 bg-slate-100 rounded-lg">
+                        <button id="mode1Btn" onclick="switchSubmissionMode('mode1')" class="px-3 py-1.5 text-xs font-semibold rounded-md transition-all bg-white text-blue-600 shadow-sm">
+                            Cách 1 (1 File Single HTML)
+                        </button>
+                        <button id="mode2Btn" onclick="switchSubmissionMode('mode2')" class="px-3 py-1.5 text-xs font-semibold rounded-md transition-all text-slate-600 hover:text-slate-900">
+                            Cách 2 (Tách 3 File: HTML/CSS/JS)
+                        </button>
+                    </div>
+                </div>
 
-    <!-- MODAL 1: NUÔI RẮN -->
-    <div id="snakeGallery" class="modal">
-        <div class="modal-content">
-            <span class="close-gallery" onclick="closeModal('snakeGallery')">&times;</span>
-            <h2 class="modal-title">🐍 Thú Cưng Của Tui 🐍</h2>
-            <div class="gallery-grid">
-                <img src="Rắn/IMG_20260909_161342.jpg" class="gallery-image" alt="Rắn thú cưng 1">
-                <img src="Rắn/PXL_20260907_161356210.jpg" class="gallery-image" alt="Rắn thú cưng 2">
-                <img src="Rắn/PXL_20260908_160121501.jpg" class="gallery-image" alt="Rắn thú cưng 3">
+                <!-- Mode 1 Container -->
+                <div id="mode1Content" class="space-y-4">
+                    <div class="flex justify-between items-center bg-slate-800 text-slate-200 px-4 py-2.5 rounded-t-xl text-xs font-mono">
+                        <span class="flex items-center gap-2"><i class="fa-regular fa-file-code text-blue-400"></i> index.html</span>
+                        <button onclick="copyCode('codeMode1', this)" class="bg-slate-700 hover:bg-slate-600 text-white px-3 py-1 rounded transition-all flex items-center gap-1">
+                            <i class="fa-regular fa-copy"></i> Sao chép toàn bộ
+                        </button>
+                    </div>
+                    <pre class="bg-slate-900 text-slate-100 p-4 rounded-b-xl text-xs font-mono overflow-x-auto max-h-[500px] mt-0"><code id="codeMode1"></code></pre>
+                </div>
+
+                <!-- Mode 2 Container -->
+                <div id="mode2Content" class="hidden space-y-6">
+                    <!-- File Tabs for Mode 2 -->
+                    <div class="flex gap-2 border-b border-slate-200 pb-2">
+                        <button id="subTabHtml" onclick="switchMode2Tab('html')" class="px-4 py-2 text-xs font-semibold rounded-lg bg-slate-800 text-white">index.html</button>
+                        <button id="subTabCss" onclick="switchMode2Tab('css')" class="px-4 py-2 text-xs font-semibold rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200">style.css</button>
+                        <button id="subTabJs" onclick="switchMode2Tab('js')" class="px-4 py-2 text-xs font-semibold rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200">script.js</button>
+                    </div>
+
+                    <div id="mode2HtmlPanel">
+                        <div class="flex justify-between items-center bg-slate-800 text-slate-200 px-4 py-2.5 rounded-t-xl text-xs font-mono">
+                            <span class="flex items-center gap-2"><i class="fa-brands fa-html5 text-orange-400"></i> index.html</span>
+                            <button onclick="copyCode('codeMode2Html', this)" class="bg-slate-700 hover:bg-slate-600 text-white px-3 py-1 rounded transition-all flex items-center gap-1">
+                                <i class="fa-regular fa-copy"></i> Sao chép
+                            </button>
+                        </div>
+                        <pre class="bg-slate-900 text-slate-100 p-4 rounded-b-xl text-xs font-mono overflow-x-auto max-h-[450px]"><code id="codeMode2Html"></code></pre>
+                    </div>
+
+                    <div id="mode2CssPanel" class="hidden">
+                        <div class="flex justify-between items-center bg-slate-800 text-slate-200 px-4 py-2.5 rounded-t-xl text-xs font-mono">
+                            <span class="flex items-center gap-2"><i class="fa-brands fa-css3-alt text-blue-400"></i> style.css</span>
+                            <button onclick="copyCode('codeMode2Css', this)" class="bg-slate-700 hover:bg-slate-600 text-white px-3 py-1 rounded transition-all flex items-center gap-1">
+                                <i class="fa-regular fa-copy"></i> Sao chép
+                            </button>
+                        </div>
+                        <pre class="bg-slate-900 text-slate-100 p-4 rounded-b-xl text-xs font-mono overflow-x-auto max-h-[450px]"><code id="codeMode2Css"></code></pre>
+                    </div>
+
+                    <div id="mode2JsPanel" class="hidden">
+                        <div class="flex justify-between items-center bg-slate-800 text-slate-200 px-4 py-2.5 rounded-t-xl text-xs font-mono">
+                            <span class="flex items-center gap-2"><i class="fa-brands fa-js text-yellow-400"></i> script.js</span>
+                            <button onclick="copyCode('codeMode2Js', this)" class="bg-slate-700 hover:bg-slate-600 text-white px-3 py-1 rounded transition-all flex items-center gap-1">
+                                <i class="fa-regular fa-copy"></i> Sao chép
+                            </button>
+                        </div>
+                        <pre class="bg-slate-900 text-slate-100 p-4 rounded-b-xl text-xs font-mono overflow-x-auto max-h-[450px]"><code id="codeMode2Js"></code></pre>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- MODAL 2: ĐÁNH CẦU -->
-    <div id="badmintonGallery" class="modal">
-        <div class="modal-content">
-            <span class="close-gallery" onclick="closeModal('badmintonGallery')">&times;</span>
-            <h2 class="modal-title">🏸 Đam Mê Cầu Lông 🏸</h2>
-            <div class="gallery-grid">
-                <img src="Cầu lông/Locket_1789119192863_84.jpg" class="gallery-image" alt="Đánh cầu 1">
-                <img src="Cầu lông/Locket_1789119203644_40.jpg" class="gallery-image" alt="Đánh cầu 2">
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL 3: NẤU ĂN -->
-    <div id="foodGallery" class="modal">
-        <div class="modal-content">
-            <span class="close-gallery" onclick="closeModal('foodGallery')">&times;</span>
-            <h2 class="modal-title">🍲 Góc Bếp & Ẩm Thực 🍲</h2>
-            <div class="gallery-grid">
-                <img src="Cook/Locket_1789119318499_26.jpg" class="gallery-image" alt="Món ăn 1">
-                <img src="Cook/Locket_1789119271466_89.jpg" class="gallery-image" alt="Món ăn 2">
-                <img src="Cook/Locket_1789119305180_19.jpg" class="gallery-image" alt="Món ăn 3">
-                <img src="Cook/Locket_1789119324636_40.jpg" class="gallery-image" alt="Món ăn 4">
-                <img src="Cook/Locket_1789119339940_68.jpg" class="gallery-image" alt="Món ăn 5">
-                <img src="Cook/Locket_1789119334208_96.jpg" class="gallery-image" alt="Món ăn 6">
-            </div>
-        </div>
-    </div>
-
-    <!-- JAVASCRIPT XỬ LÝ CLICK -->
     <script>
-        const snakeModal = document.getElementById('snakeGallery');
-        const badmintonModal = document.getElementById('badmintonGallery');
-        const foodModal = document.getElementById('foodGallery');
+        const SUBJECTS = [
+            "Giải tích 1",
+            "Đại số tuyến tính",
+            "Xác suất thống kê",
+            "Tin học đại cương",
+            "Xây dựng ứng dụng Web"
+        ];
 
-        // Mở popup Rắn
-        document.getElementById('nuoiRanItem').onclick = function() {
-            snakeModal.style.display = "block";
-            document.body.style.overflow = "hidden";
+        /**
+         * MANDATORY FUNCTION 1: calculateAverage(scores)
+         * Calculates average of score array and returns rounded to 2 decimal places.
+         * @param {number[]} scores - Array of 5 scores
+         * @returns {number} Average score rounded to 2 decimal places
+         */
+        function calculateAverage(scores) {
+            if (!scores || scores.length === 0) return 0;
+            const sum = scores.reduce((acc, curr) => acc + curr, 0);
+            const avg = sum / scores.length;
+            return Math.round(avg * 100) / 100;
         }
 
-        // Mở popup Cầu lông
-        document.getElementById('danhCauItem').onclick = function() {
-            badmintonModal.style.display = "block";
-            document.body.style.overflow = "hidden";
+        /**
+         * MANDATORY FUNCTION 2: classify(avg)
+         * Classifies academic performance based on GPA.
+         * @param {number} avg - Average score
+         * @returns {string} Grade classification
+         */
+        function classify(avg) {
+            if (avg >= 8.0) {
+                return 'Giỏi';
+            } else if (avg >= 6.5) {
+                return 'Khá';
+            } else if (avg >= 5.0) {
+                return 'Trung bình';
+            } else {
+                return 'Yếu';
+            }
         }
 
-        // Mở popup Nấu ăn
-        document.getElementById('nauAnItem').onclick = function() {
-            foodModal.style.display = "block";
-            document.body.style.overflow = "hidden";
+        // Form Submission & Validation Handler
+        function handleCalculate(event) {
+            event.preventDefault();
+            
+            // Clear previous errors
+            clearErrors();
+
+            const studentNameInput = document.getElementById('studentName');
+            const studentName = studentNameInput.value.trim();
+            let isValid = true;
+
+            // Validate Student Name
+            if (!studentName) {
+                showError('studentName', 'Vui lòng nhập tên sinh viên');
+                isValid = false;
+            }
+
+            // Extract & Validate Scores
+            const scores = [];
+            for (let i = 0; i < 5; i++) {
+                const input = document.getElementById(`score${i}`);
+                const val = input.value.trim();
+
+                if (val === '') {
+                    showError(`score${i}`, 'Không được để trống điểm');
+                    isValid = false;
+                } else {
+                    const numVal = parseFloat(val);
+                    if (isNaN(numVal) || numVal < 0 || numVal > 10) {
+                        showError(`score${i}`, 'Điểm phải là số từ 0 đến 10');
+                        isValid = false;
+                    } else {
+                        scores.push(numVal);
+                    }
+                }
+            }
+
+            if (!isValid) return;
+
+            // Calculate results using standard functions
+            const avg = calculateAverage(scores);
+            const gradeClass = classify(avg);
+
+            // Render Output View
+            displayResults(studentName, scores, avg, gradeClass);
         }
 
-        // Đóng popup theo ID
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = "none";
-            document.body.style.overflow = "auto";
+        // Display results to the page DOM without reloading
+        function displayResults(name, scores, avg, gradeClass) {
+            document.getElementById('emptyResultState').classList.add('hidden');
+            const resultCard = document.getElementById('resultCard');
+            resultCard.classList.remove('hidden');
+
+            document.getElementById('resStudentName').textContent = name;
+            document.getElementById('resAverage').textContent = avg.toFixed(2);
+            document.getElementById('resTimestamp').textContent = new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+
+            // Grade Badge Styling
+            const badge = document.getElementById('resClassificationBadge');
+            badge.textContent = gradeClass;
+            badge.className = 'inline-flex items-center px-3.5 py-1.5 rounded-full text-sm font-bold shadow-sm ';
+
+            if (gradeClass === 'Giỏi') {
+                badge.classList.add('badge-gioi');
+            } else if (gradeClass === 'Khá') {
+                badge.classList.add('badge-kha');
+            } else if (gradeClass === 'Trung bình') {
+                badge.classList.add('badge-tb');
+            } else {
+                badge.classList.add('badge-yeu');
+            }
+
+            // Populate Table
+            const tbody = document.getElementById('resTableBody');
+            tbody.innerHTML = '';
+
+            SUBJECTS.forEach((subject, index) => {
+                const score = scores[index];
+                const tr = document.createElement('tr');
+                tr.className = index % 2 === 0 ? 'bg-white' : 'bg-slate-50/50';
+
+                let scoreTagClass = 'text-slate-700 font-semibold';
+                if (score >= 8.0) scoreTagClass = 'text-emerald-600 font-bold';
+                else if (score < 5.0) scoreTagClass = 'text-rose-600 font-bold';
+
+                tr.innerHTML = `
+                    <td class="py-3 px-4 text-slate-800 font-medium">${subject}</td>
+                    <td class="py-3 px-4 text-center text-slate-400 text-xs">10.0</td>
+                    <td class="py-3 px-4 text-right ${scoreTagClass}">${score.toFixed(1)}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            // Smooth Scroll into view on mobile
+            if (window.innerWidth < 1024) {
+                resultCard.scrollIntoView({ behavior: 'smooth' });
+            }
         }
 
-        // Đóng popup khi click ra ngoài
-        window.onclick = function(event) {
-            if (event.target == snakeModal) closeModal('snakeGallery');
-            if (event.target == badmintonModal) closeModal('badmintonGallery');
-            if (event.target == foodModal) closeModal('foodGallery');
+        // Helper UI Error Functions
+        function showError(fieldId, message) {
+            const errorElem = document.getElementById(`error-${fieldId}`);
+            const inputElem = document.getElementById(fieldId);
+            if (errorElem && inputElem) {
+                errorElem.textContent = message;
+                errorElem.classList.remove('hidden');
+                inputElem.classList.add('border-rose-400', 'bg-rose-50/30');
+            }
         }
+
+        function clearErrors() {
+            const errorElems = document.querySelectorAll('[id^="error-"]');
+            errorElems.forEach(el => el.classList.add('hidden'));
+
+            const inputs = document.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.classList.remove('border-rose-400', 'bg-rose-50/30');
+            });
+        }
+
+        function resetForm() {
+            document.getElementById('gradeForm').reset();
+            clearErrors();
+            document.getElementById('resultCard').classList.add('hidden');
+            document.getElementById('emptyResultState').classList.remove('hidden');
+        }
+
+        function loadSampleData() {
+            document.getElementById('studentName').value = "Nguyễn Văn An";
+            document.getElementById('score0').value = "8.5";
+            document.getElementById('score1').value = "7.0";
+            document.getElementById('score2').value = "9.0";
+            document.getElementById('score3').value = "8.0";
+            document.getElementById('score4').value = "9.5";
+            clearErrors();
+        }
+
+        // Tab Switching Logic
+        function switchTab(tab) {
+            const appView = document.getElementById('appView');
+            const exportView = document.getElementById('exportView');
+            const tabAppBtn = document.getElementById('tabAppBtn');
+            const tabExportBtn = document.getElementById('tabExportBtn');
+
+            if (tab === 'app') {
+                appView.classList.remove('hidden');
+                exportView.classList.add('hidden');
+                tabAppBtn.className = "flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 bg-white text-blue-600 shadow-sm";
+                tabExportBtn.className = "flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 text-slate-600 hover:text-slate-900";
+            } else {
+                appView.classList.add('hidden');
+                exportView.classList.remove('hidden');
+                tabExportBtn.className = "flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 bg-white text-blue-600 shadow-sm";
+                tabAppBtn.className = "flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 text-slate-600 hover:text-slate-900";
+                populateCodeTemplates();
+            }
+        }
+
+        function switchSubmissionMode(mode) {
+            const m1 = document.getElementById('mode1Content');
+            const m2 = document.getElementById('mode2Content');
+            const b1 = document.getElementById('mode1Btn');
+            const b2 = document.getElementById('mode2Btn');
+
+            if (mode === 'mode1') {
+                m1.classList.remove('hidden');
+                m2.classList.add('hidden');
+                b1.className = "px-3 py-1.5 text-xs font-semibold rounded-md transition-all bg-white text-blue-600 shadow-sm";
+                b2.className = "px-3 py-1.5 text-xs font-semibold rounded-md transition-all text-slate-600 hover:text-slate-900";
+            } else {
+                m1.classList.add('hidden');
+                m2.classList.remove('hidden');
+                b2.className = "px-3 py-1.5 text-xs font-semibold rounded-md transition-all bg-white text-blue-600 shadow-sm";
+                b1.className = "px-3 py-1.5 text-xs font-semibold rounded-md transition-all text-slate-600 hover:text-slate-900";
+            }
+        }
+
+        function switchMode2Tab(tab) {
+            ['html', 'css', 'js'].forEach(t => {
+                const panel = document.getElementById(`mode2${t.charAt(0).toUpperCase() + t.slice(1)}Panel`);
+                const btn = document.getElementById(`subTab${t.charAt(0).toUpperCase() + t.slice(1)}`);
+                if (t === tab) {
+                    panel.classList.remove('hidden');
+                    btn.className = "px-4 py-2 text-xs font-semibold rounded-lg bg-slate-800 text-white";
+                } else {
+                    panel.classList.add('hidden');
+                    btn.className = "px-4 py-2 text-xs font-semibold rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200";
+                }
+            });
+        }
+
+        // Copy helper function
+        function copyCode(elementId, btn) {
+            const codeText = document.getElementById(elementId).textContent;
+            const textarea = document.createElement('textarea');
+            textarea.value = codeText;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = `<i class="fa-solid fa-check text-emerald-400"></i> Đã chép!`;
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+            }, 2000);
+        }
+
+        // Code Generation for Student Submission Export View
+        function populateCodeTemplates() {
+            // Cách 1: Single file
+            const singleFileCode = `<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tính Điểm Sinh Viên - Cách 1</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+        .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h2 { color: #0056b3; text-align: center; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input[type="text"], input[type="number"] { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
+        button { background: #0056b3; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; width: 100%; font-size: 16px; }
+        button:hover { background: #004085; }
+        .error { color: red; font-size: 13px; margin-top: 3px; }
+        .result-box { margin-top: 20px; padding: 15px; border: 1px solid #c3e6cb; background: #d4edda; border-radius: 5px; color: #155724; display: none; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        table, th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Tính Điểm Sinh Viên</h2>
+        <form id="studentForm">
+            <div class="form-group">
+                <label>Họ và Tên Sinh Viên:</label>
+                <input type="text" id="name" placeholder="Nhập tên sinh viên">
+                <div id="errName" class="error"></div>
+            </div>
+            
+            <div class="form-group">
+                <label>Giải tích 1:</label>
+                <input type="number" id="m1" step="0.1" placeholder="0 - 10">
+                <div id="errM1" class="error"></div>
+            </div>
+            <div class="form-group">
+                <label>Đại số tuyến tính:</label>
+                <input type="number" id="m2" step="0.1" placeholder="0 - 10">
+                <div id="errM2" class="error"></div>
+            </div>
+            <div class="form-group">
+                <label>Xác suất thống kê:</label>
+                <input type="number" id="m3" step="0.1" placeholder="0 - 10">
+                <div id="errM3" class="error"></div>
+            </div>
+            <div class="form-group">
+                <label>Tin học đại cương:</label>
+                <input type="number" id="m4" step="0.1" placeholder="0 - 10">
+                <div id="errM4" class="error"></div>
+            </div>
+            <div class="form-group">
+                <label>Xây dựng ứng dụng Web:</label>
+                <input type="number" id="m5" step="0.1" placeholder="0 - 10">
+                <div id="errM5" class="error"></div>
+            </div>
+
+            <button type="button" onclick="submitData()">Tính Kết Quả</button>
+        </form>
+
+        <div id="result" class="result-box">
+            <h3>KẾT QUẢ HỌC TẬP</h3>
+            <p><strong>Sinh viên:</strong> <span id="resName"></span></p>
+            <table>
+                <tr><th>Môn Học</th><th>Điểm</th></tr>
+                <tr><td>Giải tích 1</td><td id="resM1"></td></tr>
+                <tr><td>Đại số tuyến tính</td><td id="resM2"></td></tr>
+                <tr><td>Xác suất thống kê</td><td id="resM3"></td></tr>
+                <tr><td>Tin học đại cương</td><td id="resM4"></td></tr>
+                <tr><td>Xây dựng ứng dụng Web</td><td id="resM5"></td></tr>
+            </table>
+            <p><strong>Điểm trung bình:</strong> <span id="resAvg"></span></p>
+            <p><strong>Xếp loại:</strong> <span id="resClass"></span></p>
+        </div>
+    </div>
+
+    <script>
+        // Hàm tính điểm trung bình (Yêu cầu đề bài)
+        function calculateAverage(scores) {
+            let sum = scores.reduce((total, val) => total + val, 0);
+            return Math.round((sum / scores.length) * 100) / 100;
+        }
+
+        // Hàm xếp loại học tập (Yêu cầu đề bài)
+        function classify(avg) {
+            if (avg >= 8.0) return 'Giỏi';
+            if (avg >= 6.5) return 'Khá';
+            if (avg >= 5.0) return 'Trung bình';
+            return 'Yếu';
+        }
+
+        function submitData() {
+            // Clear errors
+            for (let i = 1; i <= 5; i++) document.getElementById('errM' + i).innerText = '';
+            document.getElementById('errName').innerText = '';
+
+            let name = document.getElementById('name').value.trim();
+            let valid = true;
+
+            if (!name) {
+                document.getElementById('errName').innerText = 'Chưa nhập tên!';
+                valid = false;
+            }
+
+            let scores = [];
+            for (let i = 1; i <= 5; i++) {
+                let val = document.getElementById('m' + i).value;
+                let num = parseFloat(val);
+                if (val === '' || isNaN(num) || num < 0 || num > 10) {
+                    document.getElementById('errM' + i).innerText = 'Điểm từ 0 - 10!';
+                    valid = false;
+                } else {
+                    scores.push(num);
+                }
+            }
+
+            if (!valid) return;
+
+            let avg = calculateAverage(scores);
+            let rank = classify(avg);
+
+            document.getElementById('resName').innerText = name;
+            for (let i = 1; i <= 5; i++) {
+                document.getElementById('resM' + i).innerText = scores[i - 1];
+            }
+            document.getElementById('resAvg').innerText = avg.toFixed(2);
+            document.getElementById('resClass').innerText = rank;
+            document.getElementById('result').style.display = 'block';
+        }
+    <\/script>
+</body>
+</html>`;
+
+            document.getElementById('codeMode1').textContent = singleFileCode;
+
+            // Mode 2 HTML
+            const mode2HtmlCode = `<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tính Điểm Sinh Viên - Cách 2</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Tính Điểm Sinh Viên</h2>
+        <form id="studentForm">
+            <div class="form-group">
+                <label>Họ và Tên Sinh Viên:</label>
+                <input type="text" id="name" placeholder="Nhập tên sinh viên">
+                <div id="errName" class="error"></div>
+            </div>
+            
+            <div class="form-group"><label>Giải tích 1:</label><input type="number" id="m1" step="0.1"><div id="errM1" class="error"></div></div>
+            <div class="form-group"><label>Đại số tuyến tính:</label><input type="number" id="m2" step="0.1"><div id="errM2" class="error"></div></div>
+            <div class="form-group"><label>Xác suất thống kê:</label><input type="number" id="m3" step="0.1"><div id="errM3" class="error"></div></div>
+            <div class="form-group"><label>Tin học đại cương:</label><input type="number" id="m4" step="0.1"><div id="errM4" class="error"></div></div>
+            <div class="form-group"><label>Xây dựng ứng dụng Web:</label><input type="number" id="m5" step="0.1"><div id="errM5" class="error"></div></div>
+
+            <button type="button" onclick="submitData()">Tính Kết Quả</button>
+        </form>
+
+        <div id="result" class="result-box">
+            <h3>KẾT QUẢ HỌC TẬP</h3>
+            <p><strong>Sinh viên:</strong> <span id="resName"></span></p>
+            <table>
+                <tr><th>Môn Học</th><th>Điểm</th></tr>
+                <tr><td>Giải tích 1</td><td id="resM1"></td></tr>
+                <tr><td>Đại số tuyến tính</td><td id="resM2"></td></tr>
+                <tr><td>Xác suất thống kê</td><td id="resM3"></td></tr>
+                <tr><td>Tin học đại cương</td><td id="resM4"></td></tr>
+                <tr><td>Xây dựng ứng dụng Web</td><td id="resM5"></td></tr>
+            </table>
+            <p><strong>Điểm trung bình:</strong> <span id="resAvg"></span></p>
+            <p><strong>Xếp loại:</strong> <span id="resClass"></span></p>
+        </div>
+    </div>
+    <script src="script.js"><\/script>
+</body>
+</html>`;
+
+            // Mode 2 CSS
+            const mode2CssCode = `body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+.container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+h2 { color: #0056b3; text-align: center; }
+.form-group { margin-bottom: 15px; }
+label { display: block; margin-bottom: 5px; font-weight: bold; }
+input[type="text"], input[type="number"] { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
+button { background: #0056b3; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; width: 100%; font-size: 16px; }
+button:hover { background: #004085; }
+.error { color: red; font-size: 13px; margin-top: 3px; }
+.result-box { margin-top: 20px; padding: 15px; border: 1px solid #c3e6cb; background: #d4edda; border-radius: 5px; color: #155724; display: none; }
+table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+table, th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+th { background-color: #f2f2f2; }`;
+
+            // Mode 2 JS
+            const mode2JsCode = `// Hàm tính điểm trung bình
+function calculateAverage(scores) {
+    let sum = scores.reduce((total, val) => total + val, 0);
+    return Math.round((sum / scores.length) * 100) / 100;
+}
+
+// Hàm xếp loại học tập
+function classify(avg) {
+    if (avg >= 8.0) return 'Giỏi';
+    if (avg >= 6.5) return 'Khá';
+    if (avg >= 5.0) return 'Trung bình';
+    return 'Yếu';
+}
+
+function submitData() {
+    // Clear errors
+    for (let i = 1; i <= 5; i++) document.getElementById('errM' + i).innerText = '';
+    document.getElementById('errName').innerText = '';
+
+    let name = document.getElementById('name').value.trim();
+    let valid = true;
+
+    if (!name) {
+        document.getElementById('errName').innerText = 'Chưa nhập tên!';
+        valid = false;
+    }
+
+    let scores = [];
+    for (let i = 1; i <= 5; i++) {
+        let val = document.getElementById('m' + i).value;
+        let num = parseFloat(val);
+        if (val === '' || isNaN(num) || num < 0 || num > 10) {
+            document.getElementById('errM' + i).innerText = 'Điểm từ 0 - 10!';
+            valid = false;
+        } else {
+            scores.push(num);
+        }
+    }
+
+    if (!valid) return;
+
+    let avg = calculateAverage(scores);
+    let rank = classify(avg);
+
+    document.getElementById('resName').innerText = name;
+    for (let i = 1; i <= 5; i++) {
+        document.getElementById('resM' + i).innerText = scores[i - 1];
+    }
+    document.getElementById('resAvg').innerText = avg.toFixed(2);
+    document.getElementById('resClass').innerText = rank;
+    document.getElementById('result').style.display = 'block';
+}`;
+
+            document.getElementById('codeMode2Html').textContent = mode2HtmlCode;
+            document.getElementById('codeMode2Css').textContent = mode2CssCode;
+            document.getElementById('codeMode2Js').textContent = mode2JsCode;
+        }
+
+        // Initialize sample data on load
+        window.addEventListener('DOMContentLoaded', () => {
+            loadSampleData();
+        });
     </script>
-
 </body>
 </html>
