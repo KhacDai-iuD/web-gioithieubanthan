@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tính điểm sinh viên</title>
+    
+    <!-- Phần CSS viết trực tiếp trong HTML -->
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f7f6;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        h2, h3 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f8f9fa;
+        }
+
+        .final-result {
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
+        .badge {
+            padding: 5px 10px;
+            border-radius: 4px;
+            color: white;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Phần Giao diện HTML -->
+    <div class="container">
+        <h2>Nhập thông tin sinh viên</h2>
+        
+        <!-- Nơi hiển thị lỗi nếu nhập sai -->
+        <div id="error-message" class="error"></div>
+        
+        <form id="student-form">
+            <div class="form-group">
+                <label for="student-name">Tên sinh viên:</label>
+                <input type="text" id="student-name" placeholder="Nhập tên sinh viên" required>
+            </div>
+            <div class="form-group">
+                <label for="score1">Giải tích 1:</label>
+                <input type="number" id="score1" step="0.1" placeholder="0 - 10" required>
+            </div>
+            <div class="form-group">
+                <label for="score2">Đại số tuyến tính:</label>
+                <input type="number" id="score2" step="0.1" placeholder="0 - 10" required>
+            </div>
+            <div class="form-group">
+                <label for="score3">Xác suất thống kê:</label>
+                <input type="number" id="score3" step="0.1" placeholder="0 - 10" required>
+            </div>
+            <div class="form-group">
+                <label for="score4">Tin học đại cương:</label>
+                <input type="number" id="score4" step="0.1" placeholder="0 - 10" required>
+            </div>
+            <div class="form-group">
+                <label for="score5">Xây dựng ứng dụng Web:</label>
+                <input type="number" id="score5" step="0.1" placeholder="0 - 10" required>
+            </div>
+            <button type="button" onclick="processData()">Tính kết quả</button>
+        </form>
+
+        <!-- Phần hiển thị kết quả (ban đầu bị ẩn bởi class 'hidden') -->
+        <div id="result-container" class="hidden">
+            <h3>Kết quả học tập</h3>
+            <p><strong>Sinh viên:</strong> <span id="display-name"></span></p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Môn học</th>
+                        <th>Điểm</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Giải tích 1</td><td id="res-score1"></td></tr>
+                    <tr><td>Đại số tuyến tính</td><td id="res-score2"></td></tr>
+                    <tr><td>Xác suất thống kê</td><td id="res-score3"></td></tr>
+                    <tr><td>Tin học đại cương</td><td id="res-score4"></td></tr>
+                    <tr><td>Xây dựng ứng dụng Web</td><td id="res-score5"></td></tr>
+                </tbody>
+            </table>
+            <p class="final-result"><strong>Điểm trung bình:</strong> <span id="display-avg"></span></p>
+            <p class="final-result"><strong>Xếp loại:</strong> <span id="display-classify" class="badge"></span></p>
+        </div>
+    </div>
+
+    <!-- Phần JavaScript viết trực tiếp trong HTML -->
+    <script>
+        // 1. Hàm tính điểm trung bình
+        function calculateAverage(scores) {
+            let sum = 0;
+            for(let i = 0; i < scores.length; i++) {
+                sum += scores[i];
+            }
+            return sum / scores.length;
+        }
+
+        // 2. Hàm xếp loại học tập
+        function classify(avg) {
+            if (avg >= 8.0) return "Giỏi";
+            if (avg >= 6.5) return "Khá";
+            if (avg >= 5.0) return "Trung bình";
+            return "Yếu";
+        }
+
+        // 3. Hàm xử lý dữ liệu khi bấm nút
+        function processData() {
+            const errorMsg = document.getElementById('error-message');
+            errorMsg.innerText = ""; // Xóa thông báo lỗi cũ
+
+            // Lấy dữ liệu từ các ô input
+            const name = document.getElementById('student-name').value.trim();
+            const s1 = parseFloat(document.getElementById('score1').value);
+            const s2 = parseFloat(document.getElementById('score2').value);
+            const s3 = parseFloat(document.getElementById('score3').value);
+            const s4 = parseFloat(document.getElementById('score4').value);
+            const s5 = parseFloat(document.getElementById('score5').value);
+
+            // Kiểm tra tên không được để trống
+            if (name === "") {
+                errorMsg.innerText = "Vui lòng nhập tên sinh viên!";
+                return;
+            }
+
+            // Kiểm tra điểm phải từ 0 đến 10 và không được bỏ trống
+            const scores = [s1, s2, s3, s4, s5];
+            for (let i = 0; i < scores.length; i++) {
+                if (isNaN(scores[i]) || scores[i] < 0 || scores[i] > 10) {
+                    errorMsg.innerText = "Vui lòng nhập điểm hợp lệ (từ 0 đến 10) cho tất cả các môn!";
+                    return;
+                }
+            }
+
+            // Gọi hàm tính toán
+            const average = calculateAverage(scores);
+            const classification = classify(average);
+
+            // Gán dữ liệu vào bảng kết quả
+            document.getElementById('display-name').innerText = name;
+            document.getElementById('res-score1').innerText = s1;
+            document.getElementById('res-score2').innerText = s2;
+            document.getElementById('res-score3').innerText = s3;
+            document.getElementById('res-score4').innerText = s4;
+            document.getElementById('res-score5').innerText = s5;
+            
+            // Làm tròn điểm trung bình 2 chữ số thập phân
+            document.getElementById('display-avg').innerText = average.toFixed(2);
+            
+            const displayClassify = document.getElementById('display-classify');
+            displayClassify.innerText = classification;
+
+            // Đổi màu nền cho nhãn xếp loại
+            if (classification === "Giỏi") displayClassify.style.backgroundColor = "#28a745"; // Xanh lá
+            else if (classification === "Khá") displayClassify.style.backgroundColor = "#17a2b8"; // Xanh dương nhạt
+            else if (classification === "Trung bình") displayClassify.style.backgroundColor = "#ffc107"; // Vàng
+            else displayClassify.style.backgroundColor = "#dc3545"; // Đỏ
+
+            // Hiển thị phần kết quả lên màn hình
+            document.getElementById('result-container').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
