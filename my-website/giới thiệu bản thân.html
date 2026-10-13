@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giới thiệu bản thân - Đinh Khắc Đại</title>
+    <!-- Nhúng Font Awesome cho biểu tượng -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 40px;
+            width: 90%;
+            max-width: 750px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.6);
+        }
+
+        p.msv {
+            font-size: 1.2rem;
+            opacity: 0.85;
+            margin-top: 0;
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+
+        .section {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .section-title i {
+            margin-right: 12px;
+            color: #f1c40f;
+        }
+
+        .list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .list-item {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 14px 18px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            font-size: 1.05rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .list-item:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.18);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .icon {
+            margin-right: 14px;
+            font-size: 1.2rem;
+            width: 25px;
+            text-align: center;
+            color: #3498db;
+        }
+
+        .intro-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            opacity: 0.95;
+            margin-bottom: 20px;
+        }
+
+        .footer {
+            margin-top: 35px;
+            font-size: 0.9rem;
+            opacity: 0.75;
+        }
+
+        .footer a {
+            color: #3498db;
+            text-decoration: none;
+            margin: 0 8px;
+            font-weight: 500;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* --- MỤC CÓ THỂ BẤM XEM ẢNH --- */
+        .clickable-item {
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .clickable-item::after {
+            content: "(Bấm xem ảnh)";
+            font-size: 0.75rem;
+            color: #f1c40f;
+            position: absolute;
+            bottom: 4px;
+            right: 12px;
+            opacity: 0.8;
+        }
+
+        /* --- CỬA SỔ POPUP (MODAL) --- */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.92);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+        }
+
+        .modal-content {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            margin: 4% auto;
+            padding: 35px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            width: 85%;
+            max-width: 950px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+            position: relative;
+            text-align: center;
+        }
+
+        .close-gallery {
+            color: rgba(255,255,255,0.6);
+            float: right;
+            font-size: 35px;
+            font-weight: bold;
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .close-gallery:hover {
+            color: #fff;
+        }
+
+        .modal-title {
+            font-size: 2rem;
+            margin-top: 0;
+            margin-bottom: 25px;
+            color: #f1c40f;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+        }
+
+        .gallery-image:hover {
+            transform: scale(1.04);
+            border-color: #f1c40f;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>ĐINH KHẮC ĐẠI</h1>
+        <p class="msv">Mã số sinh viên: 24100340</p>
+        
+        <div class="section">
+            <h2 class="section-title"><i class="fas fa-user"></i> Giới thiệu</h2>
+            <p class="intro-text">
+                Xin chào! Tôi là Đinh Khắc Đại. Đây là trang web cá nhân nhỏ do tôi tự làm. Rất vui được gặp bạn!
+            </p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title"><i class="fas fa-heart"></i> Sở thích</h2>
+            <ul class="list">
+                <li id="nuoiRanItem" class="list-item clickable-item"><i class="fas fa-staff-snake icon"></i> Nuôi rắn</li>
+                <li class="list-item"><i class="fas fa-bed icon"></i> Ngủ</li>
+                <li id="danhCauItem" class="list-item clickable-item"><i class="fas fa-table-tennis-paddle-ball icon"></i> Đánh cầu</li>
+                <li class="list-item"><i class="fas fa-microphone-alt icon"></i> Hát Karaoke</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title"><i class="fas fa-bolt"></i> Kỹ năng</h2>
+            <ul class="list">
+                <li id="nauAnItem" class="list-item clickable-item"><i class="fas fa-utensils icon"></i> Nấu ăn & Ẩm thực</li>
+                <li class="list-item"><i class="fas fa-clock icon"></i> Ngủ quá giờ trưa</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <p>© 2026 Đinh Khắc Đại - 24100340 | Kết nối: <a href="https://github.com" target="_blank">GitHub</a></p>
+        </div>
+    </div>
+
+    <!-- MODAL 1: NUÔI RẮN -->
+    <div id="snakeGallery" class="modal">
+        <div class="modal-content">
+            <span class="close-gallery" onclick="closeModal('snakeGallery')">&times;</span>
+            <h2 class="modal-title">🐍 Thú Cưng Của Tui 🐍</h2>
+            <div class="gallery-grid">
+                <img src="Rắn/IMG_20260909_161342.jpg" class="gallery-image" alt="Rắn thú cưng 1">
+                <img src="Rắn/PXL_20260907_161356210.jpg" class="gallery-image" alt="Rắn thú cưng 2">
+                <img src="Rắn/PXL_20260908_160121501.jpg" class="gallery-image" alt="Rắn thú cưng 3">
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: ĐÁNH CẦU -->
+    <div id="badmintonGallery" class="modal">
+        <div class="modal-content">
+            <span class="close-gallery" onclick="closeModal('badmintonGallery')">&times;</span>
+            <h2 class="modal-title">🏸 Đam Mê Cầu Lông 🏸</h2>
+            <div class="gallery-grid">
+                <img src="Cầu lông/Locket_1789119192863_84.jpg" class="gallery-image" alt="Đánh cầu 1">
+                <img src="Cầu lông/Locket_1789119203644_40.jpg" class="gallery-image" alt="Đánh cầu 2">
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 3: NẤU ĂN -->
+    <div id="foodGallery" class="modal">
+        <div class="modal-content">
+            <span class="close-gallery" onclick="closeModal('foodGallery')">&times;</span>
+            <h2 class="modal-title">🍲 Góc Bếp & Ẩm Thực 🍲</h2>
+            <div class="gallery-grid">
+                <img src="Cook/Locket_1789119318499_26.jpg" class="gallery-image" alt="Món ăn 1">
+                <img src="Cook/Locket_1789119271466_89.jpg" class="gallery-image" alt="Món ăn 2">
+                <img src="Cook/Locket_1789119305180_19.jpg" class="gallery-image" alt="Món ăn 3">
+                <img src="Cook/Locket_1789119324636_40.jpg" class="gallery-image" alt="Món ăn 4">
+                <img src="Cook/Locket_1789119339940_68.jpg" class="gallery-image" alt="Món ăn 5">
+                <img src="Cook/Locket_1789119334208_96.jpg" class="gallery-image" alt="Món ăn 6">
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT XỬ LÝ CLICK -->
+    <script>
+        const snakeModal = document.getElementById('snakeGallery');
+        const badmintonModal = document.getElementById('badmintonGallery');
+        const foodModal = document.getElementById('foodGallery');
+
+        // Mở popup Rắn
+        document.getElementById('nuoiRanItem').onclick = function() {
+            snakeModal.style.display = "block";
+            document.body.style.overflow = "hidden";
+        }
+
+        // Mở popup Cầu lông
+        document.getElementById('danhCauItem').onclick = function() {
+            badmintonModal.style.display = "block";
+            document.body.style.overflow = "hidden";
+        }
+
+        // Mở popup Nấu ăn
+        document.getElementById('nauAnItem').onclick = function() {
+            foodModal.style.display = "block";
+            document.body.style.overflow = "hidden";
+        }
+
+        // Đóng popup theo ID
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+            document.body.style.overflow = "auto";
+        }
+
+        // Đóng popup khi click ra ngoài
+        window.onclick = function(event) {
+            if (event.target == snakeModal) closeModal('snakeGallery');
+            if (event.target == badmintonModal) closeModal('badmintonGallery');
+            if (event.target == foodModal) closeModal('foodGallery');
+        }
+    </script>
+
+</body>
+</html>
